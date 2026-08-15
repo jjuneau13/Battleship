@@ -1,4 +1,3 @@
-import { beforeEach, describe, suite } from "node:test";
 import { Ship } from "./ship.js";
 import { Gameboard } from "./gameboard.js";
 
@@ -16,11 +15,14 @@ describe("Ship testing", () => {
 
 describe("Gameboard testing", () => {
     let testGameboard = new Gameboard();
-    test("Placing ship in gameboard", () => {
-        testGameboard.placeShip([1, 4], "B", "h");
-        expect(testGameboard.getBoard()).toBe([
+    beforeEach(() => {
+        testGameboard = new Gameboard();
+    });
+    test("Placing horizontal ship in gameboard", () => {
+        testGameboard.placeShip([1, 4], "B");
+        expect(testGameboard.getBoard()).toEqual([
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, "B", "B", "B", 0, 0, 0],
+            [0, 0, 0, 0, "B", "B", "B", "B", 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -30,5 +32,41 @@ describe("Gameboard testing", () => {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ]);
+    });
+    test("Placing vertical ship on gameboard", () => {
+        testGameboard.placeShip([3, 2], "D", true);
+        expect(testGameboard.getBoard()).toEqual([
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, "D", 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, "D", 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ]);
+    });
+    test("Placing ship near edge", () => {
+        testGameboard.placeShip([9, 5], "A");
+        expect(testGameboard.getBoard()).toEqual([
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, "A", "A", "A", "A", "A"],
+        ]);
+    });
+    test("Placing horizontal ship outside border throws error", () => {
+        expect(() => testGameboard.placeShip([9, 6], "A")).toThrow(Error);
+    });
+    test("Placing vertical ship outside border throws error", () => {
+        expect(() => testGameboard.placeShip([6, 9], "A")).toThrow(Error);
     });
 });
