@@ -93,4 +93,8 @@ describe("Gameboard testing", () => {
         testGameboard.receiveAttack(4, 6);
         expect(() => testGameboard.receiveAttack(4, 6)).toThrow(Error);
     });
+
+    test("Gameboard returns when all ships are sunk", () => {
+        expect(testGameboard.allSunk()).toBe(false);
+    });
 });

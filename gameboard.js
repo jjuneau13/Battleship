@@ -40,6 +40,13 @@ export class Gameboard {
         }
     }
 
+    allSunk() {
+        for (let ship of Object.values(this.ships)) {
+            if (ship.sunk == false) return false;
+        }
+        return true;
+    }
+
     receiveAttack(x, y) {
         if (x < 0 || x > 9 || y < 0 || y > 9) {
             throw new Error("Cannot attack outside grid");
