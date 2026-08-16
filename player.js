@@ -5,4 +5,20 @@ export class Player {
         this.cpu = cpu;
         this.board = new Gameboard();
     }
+
+    placeShip(...args) {
+        this.board.placeShip(...args);
+    }
+
+    receiveAttack(...args) {
+        this.board.receiveAttack(...args);
+    }
+
+    getBoard() {
+        return this.board.getBoard();
+    }
+
+    printBoard() {
+        this.board.printout();
+    }
 }

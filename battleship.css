@@ -1,21 +1,59 @@
 body {
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: none;
     background-color: lightblue;
-}
-.board {
-    display: grid;
-    height: 75vh;
-    grid-template-columns: repeat(10, 50px);
-    grid-template-rows: repeat(10, 50px);
-    gap: 5px;
+    box-sizing: border-box;
 }
 
-.board > button {
-    background-color: white;
-    border: 1px solid rgb(110, 110, 110);
-    border-radius: 5px;
+.boards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content 1fr;
+    text-align: center;
+    gap: 40px;
+}
+
+.boards > span {
+    font-size: 2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.player-board,
+.opponent-board {
+    display: grid;
+    height: min-content;
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: repeat(10, 50px);
+    background-color: black;
+    gap: 2px;
+    padding: 2px;
+}
+
+.opponent-board > button,
+.player-board > div {
+    background-color: lightblue;
+    border: none;
+}
+
+.player-board .C {
+    background-color: gray;
+}
+
+.player-board .A {
+    background-color: blue;
+}
+
+.player-board .D {
+    background-color: blueviolet;
+}
+
+.player-board .S {
+    background-color: brown;
+}
+
+.player-board .B {
+    background-color: black;
 }
