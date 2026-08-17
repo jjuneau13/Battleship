@@ -40,6 +40,10 @@ export class Gameboard {
         }
     }
 
+    getShips() {
+        return Object.keys(this.ships);
+    }
+
     allSunk() {
         for (let ship of Object.values(this.ships)) {
             if (ship.sunk == false) return false;

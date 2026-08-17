@@ -1,9 +1,11 @@
+let activeShip = null;
+
 function grid(callback) {
     const playerBoard = document.querySelector(".player-board");
     const opponentBoard = document.querySelector(".opponent-board");
     for (let i = 1; i <= 100; i++) {
         const button = document.createElement("button");
-        const div = document.createElement("div");
+        const div = document.createElement("button");
         button.id = `${i}`;
         button.addEventListener("click", () => {
             callback((i - 1) % 10, Math.floor((i - 1) / 10));
@@ -25,4 +27,14 @@ function displayShips(p1Ships, p2Ships) {
     }
 }
 
-export { grid, displayShips };
+function createShipBar(token) {
+    const shipBar = document.querySelector(".ships");
+    const newButton = document.createElement("button");
+    newButton.setAttribute("class", token);
+    newButton.addEventListener("click", () => (activeShip = token));
+    shipBar.append(newButton);
+}
+
+function placeShipDOM(callback, coord) {}
+
+export { grid, displayShips, createShipBar };

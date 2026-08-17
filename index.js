@@ -1,5 +1,5 @@
 import { Player } from "./player.js";
-import { grid, displayShips } from "./DOM.js";
+import { grid, displayShips, createShipBar } from "./DOM.js";
 
 let player1 = new Player();
 let player2 = new Player();
@@ -16,6 +16,10 @@ player2.placeShip([0, 3], "C", true);
 
 grid((x, y) => {
     player1.receiveAttack(x, y);
+    if (player1.allSunk()) {
+        player1.reset();
+        player2.reset();
+    }
     display();
 });
 function display() {
@@ -34,5 +38,7 @@ function display() {
             }),
     );
 }
+
+player2.getShips().forEach((shipToken) => createShipBar(shipToken));
 
 display();

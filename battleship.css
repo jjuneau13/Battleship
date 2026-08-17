@@ -11,7 +11,7 @@ body {
 .boards {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: min-content 1fr;
+    grid-template-rows: min-content 1fr min-content;
     text-align: center;
     gap: 40px;
 }
@@ -32,36 +32,76 @@ body {
     padding: 2px;
 }
 
+.ships {
+    display: flex;
+    flex-direction: column;
+    max-height: 100px;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.ships > button {
+    height: 30px;
+    border: 1px solid black;
+}
+
 .opponent-board > button,
-.player-board > div {
+.player-board > button {
     background-color: lightblue;
     border: none;
 }
 
-.player-board .C {
+.player-board .C,
+.ships .C {
     background-color: gray;
 }
 
-.player-board .A {
+.ships .C {
+    width: 90px;
+}
+
+.player-board .A,
+.ships .A {
     background-color: blue;
 }
 
-.player-board .D {
+.ships .A {
+    width: 150px;
+}
+
+.player-board .D,
+.ships .D {
     background-color: blueviolet;
 }
 
-.player-board .S {
+.ships .D {
+    width: 60px;
+}
+
+.player-board .S,
+.ships .S {
     background-color: brown;
 }
 
-.player-board .B {
+.ships .S {
+    width: 90px;
+}
+
+.player-board .B,
+.ships .B {
     background-color: black;
 }
 
-.opponent-board .X {
+.ships .B {
+    width: 120px;
+}
+
+.opponent-board .X,
+.player-board .X {
     background-color: red;
 }
 
-.opponent-board .M {
+.opponent-board .M,
+.player-board .M {
     background-color: rgb(100, 100, 255);
 }

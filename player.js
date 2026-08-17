@@ -21,4 +21,16 @@ export class Player {
     printBoard() {
         this.board.printout();
     }
+
+    allSunk() {
+        return this.board.allSunk();
+    }
+
+    reset() {
+        this.board.reset();
+    }
+
+    getShips() {
+        return this.board.getShips();
+    }
 }
