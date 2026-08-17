@@ -8,20 +8,26 @@ player1.placeShip([2, 6], "B");
 player1.placeShip([2, 1], "S");
 player1.placeShip([2, 8], "D");
 player1.placeShip([0, 3], "C", true);
-player2.placeShip([2, 4], "A");
-player2.placeShip([2, 6], "B");
-player2.placeShip([2, 1], "S");
-player2.placeShip([2, 8], "D");
-player2.placeShip([0, 3], "C", true);
+//player2.placeShip([2, 4], "A");
+//player2.placeShip([2, 6], "B");
+//player2.placeShip([2, 1], "S");
+//player2.placeShip([2, 8], "D");
+//player2.placeShip([0, 3], "C", true);
 
-grid((x, y) => {
-    player1.receiveAttack(x, y);
-    if (player1.allSunk()) {
-        player1.reset();
-        player2.reset();
-    }
-    display();
-});
+grid(
+    (x, y) => {
+        player1.receiveAttack(x, y);
+        if (player1.allSunk()) {
+            player1.reset();
+            player2.reset();
+        }
+        display();
+    },
+    (coord, token) => {
+        player2.placeShip(coord, token);
+        display();
+    },
+);
 function display() {
     displayShips(
         player1
