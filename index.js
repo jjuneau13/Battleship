@@ -15,10 +15,8 @@ player2.placeShip([2, 8], "D");
 player2.placeShip([0, 3], "C", true);
 
 grid((x, y) => {
-    let attack = player1.receiveAttack(x, y);
-    player1.printBoard();
+    player1.receiveAttack(x, y);
     display();
-    return attack;
 });
 function display() {
     displayShips(

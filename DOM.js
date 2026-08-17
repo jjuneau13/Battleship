@@ -6,10 +6,7 @@ function grid(callback) {
         const div = document.createElement("div");
         button.id = `${i}`;
         button.addEventListener("click", () => {
-            button.setAttribute(
-                "class",
-                callback((i - 1) % 10, Math.floor((i - 1) / 10)),
-            );
+            callback((i - 1) % 10, Math.floor((i - 1) / 10));
         });
         div.id = `${-i}`;
         playerBoard.append(div);
