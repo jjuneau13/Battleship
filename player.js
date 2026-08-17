@@ -11,7 +11,7 @@ export class Player {
     }
 
     receiveAttack(...args) {
-        this.board.receiveAttack(...args);
+        return this.board.receiveAttack(...args);
     }
 
     getBoard() {

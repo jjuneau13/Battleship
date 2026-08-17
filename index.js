@@ -8,12 +8,33 @@ player1.placeShip([2, 6], "B");
 player1.placeShip([2, 1], "S");
 player1.placeShip([2, 8], "D");
 player1.placeShip([0, 3], "C", true);
-grid();
-displayShips(
-    player1
-        .getBoard()
-        .flat()
-        .map((tile) => {
-            return tile == 0 ? "" : tile;
-        }),
-);
+player2.placeShip([2, 4], "A");
+player2.placeShip([2, 6], "B");
+player2.placeShip([2, 1], "S");
+player2.placeShip([2, 8], "D");
+player2.placeShip([0, 3], "C", true);
+
+grid((x, y) => {
+    let attack = player1.receiveAttack(x, y);
+    player1.printBoard();
+    display();
+    return attack;
+});
+function display() {
+    displayShips(
+        player1
+            .getBoard()
+            .flat()
+            .map((tile) => {
+                return tile == 0 ? "" : tile;
+            }),
+        player2
+            .getBoard()
+            .flat()
+            .map((tile) => {
+                return tile == 0 ? "" : tile;
+            }),
+    );
+}
+
+display();

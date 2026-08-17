@@ -56,11 +56,11 @@ export class Gameboard {
         }
         if (this.board[y][x] == 0) {
             this.board[y][x] = "M";
-            return "Miss";
+            return "M";
         } else {
             this.ships[this.board[y][x]].hit();
             this.board[y][x] = "X";
-            return "Hit!";
+            return "H";
         }
     }
 
