@@ -1,14 +1,21 @@
 let activeShip = null;
 let gameStart = false;
+let vertical = false;
 
 function grid(callback, playerCallback) {
     const playerBoard = document.querySelector(".player-board");
     const opponentBoard = document.querySelector(".opponent-board");
     const start = document.querySelector(".start");
     const startButton = document.createElement("button");
+    const flipShip = document.createElement("button");
+    flipShip.textContent = "Rotate Ships";
+    flipShip.addEventListener("click", () => {
+        vertical = !vertical;
+        document.querySelector(".ships").classList.toggle("vertical");
+    });
     startButton.addEventListener("click", () => changeGameState());
     startButton.textContent = "Start";
-    start.append(startButton);
+    start.append(startButton, flipShip);
     for (let i = 1; i <= 100; i++) {
         const button = document.createElement("button");
         const playerbutton = document.createElement("button");
@@ -23,6 +30,7 @@ function grid(callback, playerCallback) {
                 playerCallback(
                     [(i - 1) % 10, Math.floor((i - 1) / 10)],
                     activeShip,
+                    vertical,
                 );
             }
         });

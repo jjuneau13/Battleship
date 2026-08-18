@@ -23,8 +23,8 @@ grid(
         }
         display();
     },
-    (coord, token) => {
-        player2.placeShip(coord, token);
+    (coord, token, vertical) => {
+        player2.placeShip(coord, token, vertical);
         display();
     },
 );

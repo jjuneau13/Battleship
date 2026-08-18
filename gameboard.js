@@ -17,6 +17,9 @@ export class Gameboard {
     }
 
     placeShip(coord, ship, vert = false) {
+        if (this.ships[ship].placed) {
+            throw new Error("Already placed ship");
+        }
         if (vert == false) {
             if (coord[0] + this.ships[ship].length > 10)
                 throw new Error("Placed boat outside grid");
@@ -70,6 +73,7 @@ export class Gameboard {
                 this.board[i][coord[0]] = ship;
             }
         }
+        this.ships[ship].placedShip();
     }
 
     getShips() {

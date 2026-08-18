@@ -15,7 +15,7 @@ export class Ship {
         return this.sunk;
     }
 
-    placed() {
+    placedShip() {
         this.placed = true;
     }
 }

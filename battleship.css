@@ -22,6 +22,12 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.start {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .start > button {
     height: 40px;
     width: 120px;
@@ -29,6 +35,11 @@ body {
     border: none;
     font-size: 25px;
     background-color: rgba(255, 255, 255, 0);
+}
+
+.start > button ~ button {
+    width: max-content;
+    font-size: 20px;
 }
 
 .player-board,
@@ -48,6 +59,35 @@ body {
     max-height: 100px;
     flex-wrap: wrap;
     gap: 5px;
+}
+
+.ships.vertical {
+    flex-direction: row;
+    gap: 10px;
+}
+
+.ships.vertical > button {
+    width: 30px;
+}
+
+.ships.vertical .C {
+    height: 90px;
+}
+
+.ships.vertical .A {
+    height: 150px;
+}
+
+.ships.vertical .D {
+    height: 60px;
+}
+
+.ships.vertical .S {
+    height: 90px;
+}
+
+.ships.vertical .B {
+    height: 120px;
 }
 
 .ships > button {
