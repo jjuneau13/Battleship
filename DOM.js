@@ -4,18 +4,27 @@ let gameStart = false;
 function grid(callback, playerCallback) {
     const playerBoard = document.querySelector(".player-board");
     const opponentBoard = document.querySelector(".opponent-board");
+    const start = document.querySelector(".start");
+    const startButton = document.createElement("button");
+    startButton.addEventListener("click", () => changeGameState());
+    startButton.textContent = "Start";
+    start.append(startButton);
     for (let i = 1; i <= 100; i++) {
         const button = document.createElement("button");
         const playerbutton = document.createElement("button");
         button.id = `${i}`;
         button.addEventListener("click", () => {
-            callback((i - 1) % 10, Math.floor((i - 1) / 10));
+            if (gameStart) {
+                callback((i - 1) % 10, Math.floor((i - 1) / 10));
+            }
         });
         playerbutton.addEventListener("click", () => {
-            playerCallback(
-                [(i - 1) % 10, Math.floor((i - 1) / 10)],
-                activeShip,
-            );
+            if (!gameStart) {
+                playerCallback(
+                    [(i - 1) % 10, Math.floor((i - 1) / 10)],
+                    activeShip,
+                );
+            }
         });
         playerbutton.id = `${-i}`;
         playerBoard.append(playerbutton);
