@@ -28,7 +28,8 @@ function grid(callback, playerCallback) {
         playerbutton.addEventListener("click", () => {
             if (!gameStart) {
                 playerCallback(
-                    [(i - 1) % 10, Math.floor((i - 1) / 10)],
+                    (i - 1) % 10,
+                    Math.floor((i - 1) / 10),
                     activeShip,
                     vertical,
                 );

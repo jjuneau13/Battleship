@@ -15,65 +15,54 @@ export class Gameboard {
     getBoard() {
         return this.board;
     }
-
-    placeShip(coord, ship, vert = false) {
+    //placing ship and border around
+    placeShip(x, y, ship, vert = false) {
         if (this.ships[ship].placed) {
             throw new Error("Already placed ship");
         }
+        if (!this.checkPlacement(x, y, this.ships[ship].length, vert)) {
+            throw new Error("Cannot place near other ships");
+        }
         if (vert == false) {
-            if (coord[0] + this.ships[ship].length > 10)
+            if (x + this.ships[ship].length > 10)
                 throw new Error("Placed boat outside grid");
-            if (coord[1] - 1 >= 0) {
-                this.board[coord[1] - 1][coord[0] - 1] = `${ship}M`;
+            if (y - 1 >= 0) {
+                this.board[y - 1][x - 1] = `${ship}M`;
             }
-            this.board[coord[1]][coord[0] - 1] = `${ship}M`;
-            if (coord[1] < 9) {
-                this.board[coord[1] + 1][coord[0] - 1] = `${ship}M`;
+            this.board[y][x - 1] = `${ship}M`;
+            if (y < 9) {
+                this.board[y + 1][x - 1] = `${ship}M`;
             }
-            for (
-                let i = coord[0];
-                i < coord[0] + this.ships[ship].length;
-                i++
-            ) {
-                if (coord[1] - 1 >= 0) {
-                    this.board[coord[1] - 1][i] = `${ship}M`;
+            for (let i = x; i < x + this.ships[ship].length; i++) {
+                if (y - 1 >= 0) {
+                    this.board[y - 1][i] = `${ship}M`;
                 }
-                this.board[coord[1]][i] = ship;
-                if (coord[1] < 9) {
-                    this.board[coord[1] + 1][i] = `${ship}M`;
+                this.board[y][i] = ship;
+                if (y < 9) {
+                    this.board[y + 1][i] = `${ship}M`;
                 }
             }
-            if (coord[0] + this.ships[ship].length <= 9) {
-                if (coord[1] - 1 >= 0) {
-                    this.board[coord[1] - 1][
-                        coord[0] + this.ships[ship].length
-                    ] = `${ship}M`;
+            if (x + this.ships[ship].length <= 9) {
+                if (y - 1 >= 0) {
+                    this.board[y - 1][x + this.ships[ship].length] = `${ship}M`;
                 }
-                this.board[coord[1]][coord[0] + this.ships[ship].length] =
-                    `${ship}M`;
-                if (coord[1] < 9) {
-                    this.board[coord[1] + 1][
-                        coord[0] + this.ships[ship].length
-                    ] = `${ship}M`;
+                this.board[y][x + this.ships[ship].length] = `${ship}M`;
+                if (y < 9) {
+                    this.board[y + 1][x + this.ships[ship].length] = `${ship}M`;
                 }
             }
         } else {
-            if (coord[1] + this.ships[ship].length > 10)
+            if (y + this.ships[ship].length > 10)
                 throw new Error("Placed boat outside grid");
-            if (coord[1] > 1) {
-                if (this.board[coord[1] - 1][coord[0] - 1]) {
-                    this.board[coord[1] - 1][coord[0] - 1] = `${ship}M`;
-                }
+            if (y > 1) {
+                this.board[y - 1][x - 1] = `${ship}M`;
             }
-            for (
-                let i = coord[1];
-                i < coord[1] + this.ships[ship].length;
-                i++
-            ) {
-                this.board[i][coord[0]] = ship;
+            for (let i = y; i < y + this.ships[ship].length; i++) {
+                this.board[i][x] = ship;
             }
         }
         this.ships[ship].placedShip();
+        this.printout();
     }
 
     getShips() {
@@ -102,6 +91,15 @@ export class Gameboard {
             if (this.ships[this.board[y][x]].sunk) this.board[y][x] = "X";
             return "H";
         }
+    }
+
+    checkPlacement(x, y, length, vert) {
+        for (let i = 0; i < length; i++) {
+            if ((!vert ? this.board[y][x + i] : this.board[y + i][x]) != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     printout() {
