@@ -33,4 +33,8 @@ export class Player {
     getShips() {
         return this.board.getShips();
     }
+
+    getShipObj() {
+        return this.board.getShipObj();
+    }
 }

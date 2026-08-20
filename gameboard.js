@@ -15,7 +15,7 @@ export class Gameboard {
     getBoard() {
         return this.board;
     }
-    //placing ship and border around
+    //placing ship
     placeShip(x, y, ship, vert = false) {
         if (this.ships[ship].placed) {
             throw new Error("Already placed ship");
@@ -38,10 +38,10 @@ export class Gameboard {
             }
         }
         this.#border(x, y, shipLength, vert, "U");
-        this.ships[ship].placedShip();
+        this.ships[ship].placedShip(x, y, vert);
         this.printout();
     }
-
+    //helper function to place border around ship
     #border(x, y, shipLength, vert, token) {
         if (vert == false) {
             if (x + shipLength > 10)
@@ -100,6 +100,10 @@ export class Gameboard {
         return Object.keys(this.ships);
     }
 
+    getShipObj() {
+        return Object.values(this.ships);
+    }
+
     allSunk() {
         for (let ship of Object.values(this.ships)) {
             if (ship.sunk == false) return false;
@@ -114,12 +118,23 @@ export class Gameboard {
         if (this.board[y][x] == "X" || this.board[y][x] == "M") {
             throw new Error("Already attacked this tile");
         }
-        if (this.board[y][x] == 0) {
+        if (this.board[y][x] == 0 || this.board[y][x] == "U") {
             this.board[y][x] = "M";
             return "M";
         } else {
-            this.ships[this.board[y][x]].hit();
-            if (this.ships[this.board[y][x]].sunk) this.board[y][x] = "X";
+            let currShip = this.ships[this.board[y][x]];
+            currShip.hit();
+            this.board[y][x] = "X";
+            //When ship is sunk, replace border with M to indicate miss
+            if (currShip.sunk) {
+                this.#border(
+                    currShip.startX,
+                    currShip.startY,
+                    currShip.length,
+                    currShip.vert,
+                    "M",
+                );
+            }
             return "H";
         }
     }

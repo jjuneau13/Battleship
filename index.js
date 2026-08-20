@@ -3,11 +3,11 @@ import { grid, displayShips, createShipBar } from "./DOM.js";
 
 let player1 = new Player();
 let player2 = new Player();
-/*player1.placeShip([2, 4], "A");
-player1.placeShip([2, 6], "B");
-player1.placeShip([2, 1], "S");
-player1.placeShip([2, 8], "D");
-player1.placeShip([0, 3], "C", true);*/
+player1.placeShip(2, 4, "A");
+player1.placeShip(2, 6, "B");
+player1.placeShip(2, 1, "S");
+player1.placeShip(2, 8, "D");
+player1.placeShip(0, 3, "C", true);
 //player2.placeShip([2, 4], "A");
 //player2.placeShip([2, 6], "B");
 //player2.placeShip([2, 1], "S");
@@ -26,6 +26,12 @@ grid(
     (x, y, token, vertical) => {
         player2.placeShip(x, y, token, vertical);
         display();
+    },
+    () => {
+        for (let ship of player2.getShipObj()) {
+            if (!ship.placed) return false;
+        }
+        return true;
     },
 );
 function display() {
