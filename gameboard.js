@@ -27,58 +27,73 @@ export class Gameboard {
         if (vert == false) {
             if (x + shipLength > 10)
                 throw new Error("Placed boat outside grid");
-            if (y - 1 >= 0) {
-                this.board[y - 1][x - 1] = "U";
+            for (let i = x; i < x + shipLength; i++) {
+                this.board[y][i] = ship;
             }
-            this.board[y][x - 1] = "U";
+        } else {
+            if (y + shipLength > 10)
+                throw new Error("Placed boat outside grid");
+            for (let i = y; i < y + shipLength; i++) {
+                this.board[i][x] = ship;
+            }
+        }
+        this.#border(x, y, shipLength, vert, "U");
+        this.ships[ship].placedShip();
+        this.printout();
+    }
+
+    #border(x, y, shipLength, vert, token) {
+        if (vert == false) {
+            if (x + shipLength > 10)
+                throw new Error("Placed boat outside grid");
+            if (y - 1 >= 0) {
+                this.board[y - 1][x - 1] = token;
+            }
+            this.board[y][x - 1] = token;
             if (y < 9) {
-                this.board[y + 1][x - 1] = "U";
+                this.board[y + 1][x - 1] = token;
             }
             for (let i = x; i < x + shipLength; i++) {
                 if (y - 1 >= 0) {
-                    this.board[y - 1][i] = "U";
+                    this.board[y - 1][i] = token;
                 }
-                this.board[y][i] = ship;
                 if (y < 9) {
-                    this.board[y + 1][i] = "U";
+                    this.board[y + 1][i] = token;
                 }
             }
             if (x + shipLength <= 9) {
                 if (y - 1 >= 0) {
-                    this.board[y - 1][x + shipLength] = "U";
+                    this.board[y - 1][x + shipLength] = token;
                 }
-                this.board[y][x + shipLength] = "U";
+                this.board[y][x + shipLength] = token;
                 if (y < 9) {
-                    this.board[y + 1][x + shipLength] = "U";
+                    this.board[y + 1][x + shipLength] = token;
                 }
             }
         } else {
             if (y + shipLength > 10)
                 throw new Error("Placed boat outside grid");
             if (y > 0) {
-                this.board[y - 1][x - 1] = "U";
-                this.board[y - 1][x] = "U";
+                this.board[y - 1][x - 1] = token;
+                this.board[y - 1][x] = token;
                 if (x < 9) {
-                    this.board[y - 1][x + 1] = "U";
+                    this.board[y - 1][x + 1] = token;
                 }
             }
             for (let i = y; i < y + shipLength; i++) {
-                this.board[i][x - 1] = "U";
-                this.board[i][x] = ship;
+                this.board[i][x - 1] = token;
                 if (x < 9) {
-                    this.board[i][x + 1] = "U";
+                    this.board[i][x + 1] = token;
                 }
             }
             if (y + shipLength < 10) {
-                this.board[y + shipLength][x - 1] = "U";
-                this.board[y + shipLength][x] = "U";
+                this.board[y + shipLength][x - 1] = token;
+                this.board[y + shipLength][x] = token;
                 if (x < 9) {
-                    this.board[y + shipLength][x + 1] = "U";
+                    this.board[y + shipLength][x + 1] = token;
                 }
             }
         }
-        this.ships[ship].placedShip();
-        this.printout();
     }
 
     getShips() {
