@@ -24,7 +24,7 @@ grid(
         display();
     },
     (x, y, token, vertical) => {
-        player2.placeShip(coord, token, vertical);
+        player2.placeShip(x, y, token, vertical);
         display();
     },
 );

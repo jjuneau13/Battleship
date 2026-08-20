@@ -23,8 +23,9 @@ export class Gameboard {
         if (!this.checkPlacement(x, y, this.ships[ship].length, vert)) {
             throw new Error("Cannot place near other ships");
         }
+        let shipLength = this.ships[ship].length;
         if (vert == false) {
-            if (x + this.ships[ship].length > 10)
+            if (x + shipLength > 10)
                 throw new Error("Placed boat outside grid");
             if (y - 1 >= 0) {
                 this.board[y - 1][x - 1] = `${ship}M`;
@@ -33,7 +34,7 @@ export class Gameboard {
             if (y < 9) {
                 this.board[y + 1][x - 1] = `${ship}M`;
             }
-            for (let i = x; i < x + this.ships[ship].length; i++) {
+            for (let i = x; i < x + shipLength; i++) {
                 if (y - 1 >= 0) {
                     this.board[y - 1][i] = `${ship}M`;
                 }
@@ -42,23 +43,38 @@ export class Gameboard {
                     this.board[y + 1][i] = `${ship}M`;
                 }
             }
-            if (x + this.ships[ship].length <= 9) {
+            if (x + shipLength <= 9) {
                 if (y - 1 >= 0) {
-                    this.board[y - 1][x + this.ships[ship].length] = `${ship}M`;
+                    this.board[y - 1][x + shipLength] = `${ship}M`;
                 }
-                this.board[y][x + this.ships[ship].length] = `${ship}M`;
+                this.board[y][x + shipLength] = `${ship}M`;
                 if (y < 9) {
-                    this.board[y + 1][x + this.ships[ship].length] = `${ship}M`;
+                    this.board[y + 1][x + shipLength] = `${ship}M`;
                 }
             }
         } else {
-            if (y + this.ships[ship].length > 10)
+            if (y + shipLength > 10)
                 throw new Error("Placed boat outside grid");
-            if (y > 1) {
+            if (y > 0) {
                 this.board[y - 1][x - 1] = `${ship}M`;
+                this.board[y - 1][x] = `${ship}M`;
+                if (x < 9) {
+                    this.board[y - 1][x + 1] = `${ship}M`;
+                }
             }
-            for (let i = y; i < y + this.ships[ship].length; i++) {
+            for (let i = y; i < y + shipLength; i++) {
+                this.board[i][x - 1] = `${ship}M`;
                 this.board[i][x] = ship;
+                if (x < 9) {
+                    this.board[i][x + 1] = `${ship}M`;
+                }
+            }
+            if (y + shipLength < 10) {
+                this.board[y + shipLength][x - 1] = `${ship}M`;
+                this.board[y + shipLength][x] = `${ship}M`;
+                if (x < 9) {
+                    this.board[y + shipLength][x + 1] = `${ship}M`;
+                }
             }
         }
         this.ships[ship].placedShip();
