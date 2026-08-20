@@ -28,52 +28,52 @@ export class Gameboard {
             if (x + shipLength > 10)
                 throw new Error("Placed boat outside grid");
             if (y - 1 >= 0) {
-                this.board[y - 1][x - 1] = `${ship}M`;
+                this.board[y - 1][x - 1] = "U";
             }
-            this.board[y][x - 1] = `${ship}M`;
+            this.board[y][x - 1] = "U";
             if (y < 9) {
-                this.board[y + 1][x - 1] = `${ship}M`;
+                this.board[y + 1][x - 1] = "U";
             }
             for (let i = x; i < x + shipLength; i++) {
                 if (y - 1 >= 0) {
-                    this.board[y - 1][i] = `${ship}M`;
+                    this.board[y - 1][i] = "U";
                 }
                 this.board[y][i] = ship;
                 if (y < 9) {
-                    this.board[y + 1][i] = `${ship}M`;
+                    this.board[y + 1][i] = "U";
                 }
             }
             if (x + shipLength <= 9) {
                 if (y - 1 >= 0) {
-                    this.board[y - 1][x + shipLength] = `${ship}M`;
+                    this.board[y - 1][x + shipLength] = "U";
                 }
-                this.board[y][x + shipLength] = `${ship}M`;
+                this.board[y][x + shipLength] = "U";
                 if (y < 9) {
-                    this.board[y + 1][x + shipLength] = `${ship}M`;
+                    this.board[y + 1][x + shipLength] = "U";
                 }
             }
         } else {
             if (y + shipLength > 10)
                 throw new Error("Placed boat outside grid");
             if (y > 0) {
-                this.board[y - 1][x - 1] = `${ship}M`;
-                this.board[y - 1][x] = `${ship}M`;
+                this.board[y - 1][x - 1] = "U";
+                this.board[y - 1][x] = "U";
                 if (x < 9) {
-                    this.board[y - 1][x + 1] = `${ship}M`;
+                    this.board[y - 1][x + 1] = "U";
                 }
             }
             for (let i = y; i < y + shipLength; i++) {
-                this.board[i][x - 1] = `${ship}M`;
+                this.board[i][x - 1] = "U";
                 this.board[i][x] = ship;
                 if (x < 9) {
-                    this.board[i][x + 1] = `${ship}M`;
+                    this.board[i][x + 1] = "U";
                 }
             }
             if (y + shipLength < 10) {
-                this.board[y + shipLength][x - 1] = `${ship}M`;
-                this.board[y + shipLength][x] = `${ship}M`;
+                this.board[y + shipLength][x - 1] = "U";
+                this.board[y + shipLength][x] = "U";
                 if (x < 9) {
-                    this.board[y + shipLength][x + 1] = `${ship}M`;
+                    this.board[y + shipLength][x + 1] = "U";
                 }
             }
         }
