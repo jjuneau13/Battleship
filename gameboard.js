@@ -39,7 +39,6 @@ export class Gameboard {
         }
         this.#border(x, y, shipLength, vert, "U");
         this.ships[ship].placedShip(x, y, vert);
-        this.printout();
     }
     //helper function to place border around ship
     #border(x, y, shipLength, vert, token) {
@@ -141,6 +140,7 @@ export class Gameboard {
 
     checkPlacement(x, y, length, vert) {
         for (let i = 0; i < length; i++) {
+            if ((!vert ? x + length : y + length) > 10) return false;
             if ((!vert ? this.board[y][x + i] : this.board[y + i][x]) != 0) {
                 return false;
             }

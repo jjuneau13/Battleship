@@ -37,4 +37,13 @@ export class Player {
     getShipObj() {
         return this.board.getShipObj();
     }
+
+    validMove(x, y, ship, vert) {
+        return this.board.checkPlacement(
+            x,
+            y,
+            this.board.ships[ship].length,
+            vert,
+        );
+    }
 }

@@ -3,16 +3,8 @@ import { grid, displayShips, createShipBar } from "./DOM.js";
 
 let player1 = new Player();
 let player2 = new Player();
-player1.placeShip(2, 4, "A");
-player1.placeShip(2, 6, "B");
-player1.placeShip(2, 1, "S");
-player1.placeShip(2, 8, "D");
-player1.placeShip(0, 3, "C", true);
-//player2.placeShip([2, 4], "A");
-//player2.placeShip([2, 6], "B");
-//player2.placeShip([2, 1], "S");
-//player2.placeShip([2, 8], "D");
-//player2.placeShip([0, 3], "C", true);
+
+let gameStart = false;
 
 grid(
     (x, y) => {
@@ -31,16 +23,38 @@ grid(
         for (let ship of player2.getShipObj()) {
             if (!ship.placed) return false;
         }
+        gameStart = true;
         return true;
     },
+    () => {
+        if (!gameStart) {
+            player2.reset();
+            display();
+        }
+    },
 );
+
+function placeCPUShips() {
+    for (let ship of player1.getShips()) {
+        let x = Math.floor(Math.random() * 9);
+        let y = Math.floor(Math.random() * 9);
+        let vert = Math.random() > 0.5;
+        while (!player1.validMove(x, y, ship, vert)) {
+            x = Math.floor(Math.random() * 9);
+            y = Math.floor(Math.random() * 9);
+            vert = Math.random() > 0.5;
+        }
+        player1.placeShip(x, y, ship, vert);
+    }
+}
+
 function display() {
     displayShips(
         player1
             .getBoard()
             .flat()
             .map((tile) => {
-                return tile == 0 ? "" : tile;
+                return tile == 0 || (tile != "M" && tile != "X") ? "" : tile;
             }),
         player2
             .getBoard()
@@ -50,7 +64,6 @@ function display() {
             }),
     );
 }
-
 player2.getShips().forEach((shipToken) => createShipBar(shipToken));
-
+placeCPUShips();
 display();

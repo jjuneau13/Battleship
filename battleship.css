@@ -155,3 +155,15 @@ body {
 .player-board .M {
     background-color: rgb(100, 100, 255);
 }
+
+button:hover {
+    box-shadow: inset 0px 0px 5px grey;
+}
+
+button:active {
+    box-shadow: none;
+}
+
+.ships > button:hover {
+    box-shadow: 2px 2px 5px grey;
+}
