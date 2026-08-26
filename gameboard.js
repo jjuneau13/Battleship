@@ -119,7 +119,7 @@ export class Gameboard {
         }
         if (this.board[y][x] == 0 || this.board[y][x] == "U") {
             this.board[y][x] = "M";
-            return "M";
+            return { hit: false, sunk: false };
         } else {
             let currShip = this.ships[this.board[y][x]];
             currShip.hit();
@@ -134,7 +134,7 @@ export class Gameboard {
                     "M",
                 );
             }
-            return "H";
+            return { hit: true, sunk: currShip.sunk };
         }
     }
 
