@@ -70,33 +70,32 @@ export class Player {
             }
             this.moveList = boardCallback();
             return;
-        } else {
-            let [x1, y1] = this.previousHits.at(-1);
-            let [x2, y2] = this.previousHits.at(-2);
-            if (x1 == x2) {
-                if (this.moveList.includes(`${[x1, y1 + 1]}`)) {
-                    y1++;
-                } else {
-                    while (!this.moveList.includes(`${[x1, y1]}`)) {
-                        y1--;
-                    }
-                }
-            } else if (y1 == y2) {
-                if (this.moveList.includes(`${(x1 + 1, y1)}`)) {
-                    x1++;
-                } else {
-                    while (!this.moveList.includes(`${(x1, y1)}`)) {
-                        x1--;
-                    }
+        }
+        let [x1, y1] = this.previousHits.at(-1);
+        let [x2, y2] = this.previousHits.at(-2);
+        if (x1 == x2) {
+            if (this.moveList.includes(`${[x1, y1 + 1]}`)) {
+                y1++;
+            } else {
+                while (!this.moveList.includes(`${[x1, y1]}`)) {
+                    y1--;
                 }
             }
-            let attack = attackCallback(x1, y1);
-            if (attack.hit) {
-                this.previousHits.push([x1, y1]);
+        } else if (y1 == y2) {
+            if (this.moveList.includes(`${[x1 + 1, y1]}`)) {
+                x1++;
+            } else {
+                while (!this.moveList.includes(`${[x1, y1]}`)) {
+                    x1--;
+                }
             }
-            if (attack.sunk) {
-                this.previousHits = [];
-            }
+        }
+        let attack = attackCallback(x1, y1);
+        if (attack.hit) {
+            this.previousHits.push([x1, y1]);
+        }
+        if (attack.sunk) {
+            this.previousHits = [];
         }
         this.moveList = boardCallback();
     }
