@@ -73,4 +73,4 @@ function changeGameState() {
     gameStart = !gameStart;
 }
 
-export { grid, displayShips, createShipBar };
+export { grid, displayShips, createShipBar, changeGameState };

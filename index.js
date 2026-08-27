@@ -1,5 +1,5 @@
 import { Player } from "./player.js";
-import { grid, displayShips, createShipBar } from "./DOM.js";
+import { grid, displayShips, createShipBar, changeGameState } from "./DOM.js";
 
 let player1 = new Player(true);
 let player2 = new Player();
@@ -7,25 +7,31 @@ let player2 = new Player();
 let gameStart = false;
 
 grid(
+    //function to pass to DOM for human player to attack CPU ships with buttons
     (x, y) => {
         player1.receiveAttack(x, y);
         if (player1.allSunk()) {
             gameStart = false;
-            player1.reset();
-            player2.reset();
+            changeGameState();
         }
         display();
-        //Use player1.attack()
+        //Intelligent CPU attacking phase
         player1.CPUattack(
             (x, y) => player2.receiveAttack(x, y),
             () => player2.possibleMoves(),
         );
+        if (player2.allSunk()) {
+            gameStart = false;
+            changeGameState();
+        }
         display();
     },
+    //function to allow player to place ships by clicking ship then grid
     (x, y, token, vertical) => {
         player2.placeShip(x, y, token, vertical);
         display();
     },
+    //function to start the game
     () => {
         for (let ship of player2.getShipObj()) {
             if (!ship.placed) return false;
@@ -33,8 +39,10 @@ grid(
         gameStart = true;
         return true;
     },
+    //function to reset the board before playing
     () => {
         if (!gameStart) {
+            player1.reset();
             player2.reset();
             display();
         }
