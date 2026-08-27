@@ -16,7 +16,10 @@ grid(
         }
         display();
         //Use player1.attack()
-        player1.CPUattack((x, y) => player2.receiveAttack(x, y));
+        player1.CPUattack(
+            (x, y) => player2.receiveAttack(x, y),
+            () => player2.possibleMoves(),
+        );
         display();
     },
     (x, y, token, vertical) => {

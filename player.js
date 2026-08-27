@@ -38,44 +38,79 @@ export class Player {
         return { x, y, hit: attack.hit, sunk: attack.sunk };
     }
 
-    CPUattack(attackCallback) {
+    CPUattack(attackCallback, boardCallback) {
         if (this.previousHits.length === 0) {
             let rand = Math.floor(Math.random() * this.moveList.length);
-            let [x, y] = this.#popMove(rand);
-            if (attackCallback(x, y)) {
+            let coord = this.moveList[rand];
+            let x = parseInt(coord.at(0));
+            let y = parseInt(coord.at(2));
+            if (attackCallback(x, y).hit) {
                 this.previousHits.push([x, y]);
             }
-        } else {
-            if (this.previousHits.length === 1) {
-                let [x, y] = this.previousHits[0];
-                if (this.moveList.includes(`${[x + 1, y]}`)) {
-                    x++;
-                } else if (this.moveList.includes(`${[x, y + 1]}`)) {
-                    y++;
-                } else if (this.moveList.includes(`${[x - 1, y]}`)) {
-                    x--;
-                } else {
-                    y--;
-                }
-                let attack = attackCallback(x, y);
-                if (attack.hit) {
-                    this.previousHits.push(x, y);
-                }
-                if (attack.sunk) {
-                    this.previousHits = [];
-                }
+            this.moveList = boardCallback();
+            return;
+        }
+        if (this.previousHits.length === 1) {
+            let [x, y] = this.previousHits[0];
+            if (this.moveList.includes(`${[x + 1, y]}`)) {
+                x++;
+            } else if (this.moveList.includes(`${[x, y + 1]}`)) {
+                y++;
+            } else if (this.moveList.includes(`${[x - 1, y]}`)) {
+                x--;
             } else {
+                y--;
+            }
+            let attack = attackCallback(x, y);
+            if (attack.hit) {
+                this.previousHits.push([x, y]);
+            }
+            if (attack.sunk) {
+                this.previousHits = [];
+            }
+            this.moveList = boardCallback();
+            return;
+        } else {
+            let [x1, y1] = this.previousHits.at(-1);
+            let [x2, y2] = this.previousHits.at(-2);
+            if (x1 == x2) {
+                if (this.moveList.includes(`${[x1, y1 + 1]}`)) {
+                    y1++;
+                } else {
+                    while (!this.moveList.includes(`${[x1, y1]}`)) {
+                        y1--;
+                    }
+                }
+            } else if (y1 == y2) {
+                if (this.moveList.includes(`${(x1 + 1, y1)}`)) {
+                    x1++;
+                } else {
+                    while (!this.moveList.includes(`${(x1, y1)}`)) {
+                        x1--;
+                    }
+                }
+            }
+            let attack = attackCallback(x1, y1);
+            if (attack.hit) {
+                this.previousHits.push([x1, y1]);
+            }
+            if (attack.sunk) {
+                this.previousHits = [];
             }
         }
+        this.moveList = boardCallback();
     }
 
-    #popMove(index) {
-        [this.moveList[index], this.moveList[this.moveList.length - 1]] = [
-            this.moveList[this.moveList.length - 1],
-            this.moveList[index],
-        ];
-        let coord = this.moveList.pop();
-        return [parseInt(coord.at(0)), parseInt(coord.at(2))];
+    possibleMoves() {
+        let updatedBoard = [];
+        this.getBoard().forEach((row, y) => {
+            row.forEach((state, x) => {
+                if (state != "M" && state != "X") {
+                    updatedBoard.push(`${[x, y]}`);
+                }
+            });
+        });
+        return updatedBoard;
     }
 
     getBoard() {
